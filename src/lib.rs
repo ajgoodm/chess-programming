@@ -1,3 +1,8 @@
+#[macro_use]
+extern crate lazy_static;
+
+pub mod board;
+
 #[cfg(test)]
 mod tests {
     #[test]
