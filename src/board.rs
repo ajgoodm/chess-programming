@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 lazy_static! {
     static ref FILE_A_SQUARES: HashSet<Square> = [
@@ -193,8 +193,92 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
+    static ref FILE_RANK_TO_SQUARE: HashMap<(&'static File, &'static Rank), Square> = {
+        let mut m: HashMap<(&File, &Rank), Square> = HashMap::new();
+        // File A
+        m.insert((&File::A, &Rank::First), Square::A1);
+        m.insert((&File::A, &Rank::Second), Square::A2);
+        m.insert((&File::A, &Rank::Third), Square::A3);
+        m.insert((&File::A, &Rank::Fourth), Square::A4);
+        m.insert((&File::A, &Rank::Fifth), Square::A5);
+        m.insert((&File::A, &Rank::Sixth), Square::A6);
+        m.insert((&File::A, &Rank::Seventh), Square::A7);
+        m.insert((&File::A, &Rank::Eigth), Square::A8);
+
+        // File B
+        m.insert((&File::B, &Rank::First), Square::B1);
+        m.insert((&File::B, &Rank::Second), Square::B2);
+        m.insert((&File::B, &Rank::Third), Square::B3);
+        m.insert((&File::B, &Rank::Fourth), Square::B4);
+        m.insert((&File::B, &Rank::Fifth), Square::B5);
+        m.insert((&File::B, &Rank::Sixth), Square::B6);
+        m.insert((&File::B, &Rank::Seventh), Square::B7);
+        m.insert((&File::B, &Rank::Eigth), Square::B8);
+
+        // File C
+        m.insert((&File::C, &Rank::First), Square::C1);
+        m.insert((&File::C, &Rank::Second), Square::C2);
+        m.insert((&File::C, &Rank::Third), Square::C3);
+        m.insert((&File::C, &Rank::Fourth), Square::C4);
+        m.insert((&File::C, &Rank::Fifth), Square::C5);
+        m.insert((&File::C, &Rank::Sixth), Square::C6);
+        m.insert((&File::C, &Rank::Seventh), Square::C7);
+        m.insert((&File::C, &Rank::Eigth), Square::C8);
+
+        // File D
+        m.insert((&File::D, &Rank::First), Square::D1);
+        m.insert((&File::D, &Rank::Second), Square::D2);
+        m.insert((&File::D, &Rank::Third), Square::D3);
+        m.insert((&File::D, &Rank::Fourth), Square::D4);
+        m.insert((&File::D, &Rank::Fifth), Square::D5);
+        m.insert((&File::D, &Rank::Sixth), Square::D6);
+        m.insert((&File::D, &Rank::Seventh), Square::D7);
+        m.insert((&File::D, &Rank::Eigth), Square::D8);
+
+        // File E
+        m.insert((&File::E, &Rank::First), Square::E1);
+        m.insert((&File::E, &Rank::Second), Square::E2);
+        m.insert((&File::E, &Rank::Third), Square::E3);
+        m.insert((&File::E, &Rank::Fourth), Square::E4);
+        m.insert((&File::E, &Rank::Fifth), Square::E5);
+        m.insert((&File::E, &Rank::Sixth), Square::E6);
+        m.insert((&File::E, &Rank::Seventh), Square::E7);
+        m.insert((&File::E, &Rank::Eigth), Square::E8);
+
+        // File F
+        m.insert((&File::F, &Rank::First), Square::F1);
+        m.insert((&File::F, &Rank::Second), Square::F2);
+        m.insert((&File::F, &Rank::Third), Square::F3);
+        m.insert((&File::F, &Rank::Fourth), Square::F4);
+        m.insert((&File::F, &Rank::Fifth), Square::F5);
+        m.insert((&File::F, &Rank::Sixth), Square::F6);
+        m.insert((&File::F, &Rank::Seventh), Square::F7);
+        m.insert((&File::F, &Rank::Eigth), Square::F8);
+
+        // File G
+        m.insert((&File::G, &Rank::First), Square::G1);
+        m.insert((&File::G, &Rank::Second), Square::G2);
+        m.insert((&File::G, &Rank::Third), Square::G3);
+        m.insert((&File::G, &Rank::Fourth), Square::G4);
+        m.insert((&File::G, &Rank::Fifth), Square::G5);
+        m.insert((&File::G, &Rank::Sixth), Square::G6);
+        m.insert((&File::G, &Rank::Seventh), Square::G7);
+        m.insert((&File::G, &Rank::Eigth), Square::G8);
+
+        // File H
+        m.insert((&File::H, &Rank::First), Square::H1);
+        m.insert((&File::H, &Rank::Second), Square::H2);
+        m.insert((&File::H, &Rank::Third), Square::H3);
+        m.insert((&File::H, &Rank::Fourth), Square::H4);
+        m.insert((&File::H, &Rank::Fifth), Square::H5);
+        m.insert((&File::H, &Rank::Sixth), Square::H6);
+        m.insert((&File::H, &Rank::Seventh), Square::H7);
+        m.insert((&File::H, &Rank::Eigth), Square::H8);
+        m
+    };
 }
 
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum Rank {
     First,
     Second,
@@ -221,6 +305,7 @@ impl Rank {
     }
 }
 
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 pub enum File {
     A,
     B,
@@ -248,7 +333,7 @@ impl File {
 }
 
 #[rustfmt::skip]
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub enum Square {
     A8, B8, C8, D8, E8, F8, G8, H8,
     A7, B7, C7, D7, E7, F7, G7, H7,
@@ -258,6 +343,12 @@ pub enum Square {
     A3, B3, C3, D3, E3, F3, G3, H3,
     A2, B2, C2, D2, E2, F2, G2, H2,
     A1, B1, C1, D1, E1, F1, G1, H1,
+}
+
+impl Square {
+    pub fn from_file_rank(file: &File, rank: &Rank) -> Square {
+        FILE_RANK_TO_SQUARE.get(&(file, rank)).unwrap().clone()
+    }
 }
 
 #[cfg(test)]
@@ -274,5 +365,11 @@ mod tests {
     fn test_file_squares() {
         let rank_1: Rank = Rank::First;
         assert_eq!(rank_1.squares(), &*RANK_1_SQUARES);
+    }
+
+    #[test]
+    fn test_square_from_file_rank() {
+        assert_eq!(Square::from_file_rank(&File::A, &Rank::First), Square::A1);
+        assert_eq!(Square::from_file_rank(&File::G, &Rank::Fifth), Square::G5);
     }
 }
