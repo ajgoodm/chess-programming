@@ -1,9 +1,9 @@
-enum PieceColor {
+pub enum PieceColor {
     Black,
     White,
 }
 
-enum PieceType {
+pub enum PieceType {
     Pawn,
     Rook,
     Knight,
