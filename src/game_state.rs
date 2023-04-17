@@ -40,6 +40,10 @@ impl GameState {
             .collect()
     }
 
+    /// I take a proposed move (piece and destination square) that is 'allowed'
+    /// according to a piece's move set and evaluate it it the context of self
+    /// to see if it's actually allowed (is the square occupied? Is a castling square
+    /// threatened?).
     fn execute_move(&self, square: Square, piece: &Piece) -> Option<(Move, GameState)> {
         None
     }
