@@ -1,4 +1,4 @@
-use crate::board::{File, Rank, Square};
+use crate::board::Square;
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub enum PieceColor {
@@ -16,49 +16,16 @@ pub enum PieceRole {
     Queen,
 }
 
-pub trait Piece {
-    fn color(&self) -> &PieceColor;
-
-    fn role(&self) -> &PieceRole;
-
-    fn square(&self) -> &Square;
-}
-
-pub struct Pawn {
+pub struct Piece {
+    role: PieceRole,
     color: PieceColor,
     square: Square,
 }
 
-impl Pawn {
-    pub fn new(color: PieceColor, file: &File, rank: &Rank) -> Pawn {
-        Pawn {
-            color,
-            square: Square::from_file_rank(file, rank),
-        }
-    }
-}
-
-impl Piece for Pawn {
-    fn color(&self) -> &PieceColor {
-        &self.color
-    }
-    fn role(&self) -> &PieceRole {
-        &PieceRole::Pawn
-    }
-    fn square(&self) -> &Square {
-        &self.square
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_pawn_properties() {
-        let pawn = Pawn::new(PieceColor::White, &File::A, &Rank::Second);
-        assert_eq!(pawn.color(), &PieceColor::White);
-        assert_eq!(pawn.role(), &PieceRole::Pawn);
-        assert_eq!(pawn.square(), &Square::A2);
+impl Piece {
+    /// I return all squares accesible from my position
+    /// in one move. I do not know anything about game state.
+    pub fn candidate_moves(&self) -> Vec<Square> {
+        Vec::new()
     }
 }

@@ -293,14 +293,14 @@ pub enum Rank {
 impl Rank {
     pub fn squares(&self) -> &HashSet<Square> {
         match self {
-            Rank::First => &*RANK_1_SQUARES,
-            Rank::Second => &*RANK_2_SQUARES,
-            Rank::Third => &*RANK_3_SQUARES,
-            Rank::Fourth => &*RANK_4_SQUARES,
-            Rank::Fifth => &*RANK_5_SQUARES,
-            Rank::Sixth => &*RANK_6_SQUARES,
-            Rank::Seventh => &*RANK_7_SQUARES,
-            Rank::Eigth => &*RANK_8_SQUARES,
+            Rank::First => &RANK_1_SQUARES,
+            Rank::Second => &RANK_2_SQUARES,
+            Rank::Third => &RANK_3_SQUARES,
+            Rank::Fourth => &RANK_4_SQUARES,
+            Rank::Fifth => &RANK_5_SQUARES,
+            Rank::Sixth => &RANK_6_SQUARES,
+            Rank::Seventh => &RANK_7_SQUARES,
+            Rank::Eigth => &RANK_8_SQUARES,
         }
     }
 }
@@ -320,14 +320,14 @@ pub enum File {
 impl File {
     pub fn squares(&self) -> &HashSet<Square> {
         match self {
-            File::A => &*FILE_A_SQUARES,
-            File::B => &*FILE_B_SQUARES,
-            File::C => &*FILE_C_SQUARES,
-            File::D => &*FILE_D_SQUARES,
-            File::E => &*FILE_E_SQUARES,
-            File::F => &*FILE_F_SQUARES,
-            File::G => &*FILE_G_SQUARES,
-            File::H => &*FILE_H_SQUARES,
+            File::A => &FILE_A_SQUARES,
+            File::B => &FILE_B_SQUARES,
+            File::C => &FILE_C_SQUARES,
+            File::D => &FILE_D_SQUARES,
+            File::E => &FILE_E_SQUARES,
+            File::F => &FILE_F_SQUARES,
+            File::G => &FILE_G_SQUARES,
+            File::H => &FILE_H_SQUARES,
         }
     }
 }
