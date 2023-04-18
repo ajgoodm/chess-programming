@@ -1,17 +1,11 @@
 use std::collections::HashSet;
 
-use crate::board::Square;
-use crate::piece::{Piece, PieceColor};
+use crate::piece::{Move, Piece, PieceColor};
 
 struct GameState {
     white_pieces: HashSet<Piece>,
     black_pieces: HashSet<Piece>,
     to_play: PieceColor,
-}
-
-struct Move {
-    from: Piece,
-    to: Square,
 }
 
 impl GameState {
@@ -32,11 +26,10 @@ impl GameState {
         }
     }
 
-    fn moves_for_piece(&self, piece: &Piece) -> Vec<(Move, GameState)> {
-        piece
-            .candidate_moves()
+    fn moves_for_piece(&self, from: &Piece) -> Vec<(Move, GameState)> {
+        from.candidate_moves()
             .into_iter()
-            .filter_map(|square| self.execute_move(square, piece))
+            .filter_map(|move_| self.execute_move(move_))
             .collect()
     }
 
@@ -44,7 +37,7 @@ impl GameState {
     /// according to a piece's move set and evaluate it it the context of self
     /// to see if it's actually allowed (is the square occupied? Is a castling square
     /// threatened?).
-    fn execute_move(&self, square: Square, piece: &Piece) -> Option<(Move, GameState)> {
+    fn execute_move(&self, move_: Move) -> Option<(Move, GameState)> {
         None
     }
 }

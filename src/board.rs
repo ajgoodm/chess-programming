@@ -1,4 +1,7 @@
-use std::collections::{HashMap, HashSet};
+use std::{
+    collections::{HashMap, HashSet},
+    hash::Hash,
+};
 
 lazy_static! {
     static ref FILE_A_SQUARES: HashSet<Square> = [
@@ -276,9 +279,182 @@ lazy_static! {
         m.insert((&File::H, &Rank::Eigth), Square::H8);
         m
     };
+
+    // used to look up square by index
+    static ref SQUARE_ARRAY: [Square; 64] = [
+        Square::A1, Square::B1, Square::C1, Square::D1, Square::E1, Square::F1, Square::G1, Square::H1,
+        Square::A2, Square::B2, Square::C2, Square::D2, Square::E2, Square::F2, Square::G2, Square::H2,
+        Square::A3, Square::B3, Square::C3, Square::D3, Square::E3, Square::F3, Square::G3, Square::H3,
+        Square::A4, Square::B4, Square::C4, Square::D4, Square::E4, Square::F4, Square::G4, Square::H4,
+        Square::A5, Square::B5, Square::C5, Square::D5, Square::E5, Square::F5, Square::G5, Square::H5,
+        Square::A6, Square::B6, Square::C6, Square::D6, Square::E6, Square::F6, Square::G6, Square::H6,
+        Square::A7, Square::B7, Square::C7, Square::D7, Square::E7, Square::F7, Square::G7, Square::H7,
+        Square::A8, Square::B8, Square::C8, Square::D8, Square::E8, Square::F8, Square::G8, Square::H8,
+    ];
+
+    // used to look up index by square
+    static ref SQUARE_TO_INDEX: HashMap<Square, usize> = {
+        let mut m: HashMap<Square, usize> = HashMap::new();
+        for (idx, square) in SQUARE_ARRAY.iter().enumerate() {
+            m.insert(square.clone(), idx);
+        }
+        m
+    };
+
+    static ref SQUARE_TO_RANK: HashMap<Square, Rank> = {
+        let mut m: HashMap<Square, Rank> = HashMap::new();
+        m.insert(Square::A1, Rank::First);
+        m.insert(Square::B1, Rank::First);
+        m.insert(Square::C1, Rank::First);
+        m.insert(Square::D1, Rank::First);
+        m.insert(Square::E1, Rank::First);
+        m.insert(Square::F1, Rank::First);
+        m.insert(Square::G1, Rank::First);
+        m.insert(Square::H1, Rank::First);
+
+        m.insert(Square::A2, Rank::Second);
+        m.insert(Square::B2, Rank::Second);
+        m.insert(Square::C2, Rank::Second);
+        m.insert(Square::D2, Rank::Second);
+        m.insert(Square::E2, Rank::Second);
+        m.insert(Square::F2, Rank::Second);
+        m.insert(Square::G2, Rank::Second);
+        m.insert(Square::H2, Rank::Second);
+
+        m.insert(Square::A3, Rank::Third);
+        m.insert(Square::B3, Rank::Third);
+        m.insert(Square::C3, Rank::Third);
+        m.insert(Square::D3, Rank::Third);
+        m.insert(Square::E3, Rank::Third);
+        m.insert(Square::F3, Rank::Third);
+        m.insert(Square::G3, Rank::Third);
+        m.insert(Square::H3, Rank::Third);
+
+        m.insert(Square::A4, Rank::Fourth);
+        m.insert(Square::B4, Rank::Fourth);
+        m.insert(Square::C4, Rank::Fourth);
+        m.insert(Square::D4, Rank::Fourth);
+        m.insert(Square::E4, Rank::Fourth);
+        m.insert(Square::F4, Rank::Fourth);
+        m.insert(Square::G4, Rank::Fourth);
+        m.insert(Square::H4, Rank::Fourth);
+
+        m.insert(Square::A5, Rank::Fifth);
+        m.insert(Square::B5, Rank::Fifth);
+        m.insert(Square::C5, Rank::Fifth);
+        m.insert(Square::D5, Rank::Fifth);
+        m.insert(Square::E5, Rank::Fifth);
+        m.insert(Square::F5, Rank::Fifth);
+        m.insert(Square::G5, Rank::Fifth);
+        m.insert(Square::H5, Rank::Fifth);
+
+        m.insert(Square::A6, Rank::Sixth);
+        m.insert(Square::B6, Rank::Sixth);
+        m.insert(Square::C6, Rank::Sixth);
+        m.insert(Square::D6, Rank::Sixth);
+        m.insert(Square::E6, Rank::Sixth);
+        m.insert(Square::F6, Rank::Sixth);
+        m.insert(Square::G6, Rank::Sixth);
+        m.insert(Square::H6, Rank::Sixth);
+
+        m.insert(Square::A7, Rank::Seventh);
+        m.insert(Square::B7, Rank::Seventh);
+        m.insert(Square::C7, Rank::Seventh);
+        m.insert(Square::D7, Rank::Seventh);
+        m.insert(Square::E7, Rank::Seventh);
+        m.insert(Square::F7, Rank::Seventh);
+        m.insert(Square::G7, Rank::Seventh);
+        m.insert(Square::H7, Rank::Seventh);
+
+        m.insert(Square::A8, Rank::Eigth);
+        m.insert(Square::B8, Rank::Eigth);
+        m.insert(Square::C8, Rank::Eigth);
+        m.insert(Square::D8, Rank::Eigth);
+        m.insert(Square::E8, Rank::Eigth);
+        m.insert(Square::F8, Rank::Eigth);
+        m.insert(Square::G8, Rank::Eigth);
+        m.insert(Square::H8, Rank::Eigth);
+        m
+    };
+
+    static ref SQUARE_TO_FILE: HashMap<Square, File> = {
+        let mut m: HashMap<Square, File> = HashMap::new();
+        m.insert(Square::A1, File::A);
+        m.insert(Square::A2, File::A);
+        m.insert(Square::A3, File::A);
+        m.insert(Square::A4, File::A);
+        m.insert(Square::A5, File::A);
+        m.insert(Square::A6, File::A);
+        m.insert(Square::A7, File::A);
+        m.insert(Square::A8, File::A);
+
+        m.insert(Square::B1, File::B);
+        m.insert(Square::B2, File::B);
+        m.insert(Square::B3, File::B);
+        m.insert(Square::B4, File::B);
+        m.insert(Square::B5, File::B);
+        m.insert(Square::B6, File::B);
+        m.insert(Square::B7, File::B);
+        m.insert(Square::B8, File::B);
+
+        m.insert(Square::C1, File::C);
+        m.insert(Square::C2, File::C);
+        m.insert(Square::C3, File::C);
+        m.insert(Square::C4, File::C);
+        m.insert(Square::C5, File::C);
+        m.insert(Square::C6, File::C);
+        m.insert(Square::C7, File::C);
+        m.insert(Square::C8, File::C);
+
+        m.insert(Square::D1, File::D);
+        m.insert(Square::D2, File::D);
+        m.insert(Square::D3, File::D);
+        m.insert(Square::D4, File::D);
+        m.insert(Square::D5, File::D);
+        m.insert(Square::D6, File::D);
+        m.insert(Square::D7, File::D);
+        m.insert(Square::D8, File::D);
+
+        m.insert(Square::E1, File::E);
+        m.insert(Square::E2, File::E);
+        m.insert(Square::E3, File::E);
+        m.insert(Square::E4, File::E);
+        m.insert(Square::E5, File::E);
+        m.insert(Square::E6, File::E);
+        m.insert(Square::E7, File::E);
+        m.insert(Square::E8, File::E);
+
+        m.insert(Square::F1, File::F);
+        m.insert(Square::F2, File::F);
+        m.insert(Square::F3, File::F);
+        m.insert(Square::F4, File::F);
+        m.insert(Square::F5, File::F);
+        m.insert(Square::F6, File::F);
+        m.insert(Square::F7, File::F);
+        m.insert(Square::F8, File::F);
+
+        m.insert(Square::G1, File::G);
+        m.insert(Square::G2, File::G);
+        m.insert(Square::G3, File::G);
+        m.insert(Square::G4, File::G);
+        m.insert(Square::G5, File::G);
+        m.insert(Square::G6, File::G);
+        m.insert(Square::G7, File::G);
+        m.insert(Square::G8, File::G);
+
+        m.insert(Square::H1, File::H);
+        m.insert(Square::H2, File::H);
+        m.insert(Square::H3, File::H);
+        m.insert(Square::H4, File::H);
+        m.insert(Square::H5, File::H);
+        m.insert(Square::H6, File::H);
+        m.insert(Square::H7, File::H);
+        m.insert(Square::H8, File::H);
+        m
+    };
 }
 
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, PartialOrd, Ord)]
 pub enum Rank {
     First,
     Second,
@@ -290,22 +466,7 @@ pub enum Rank {
     Eigth,
 }
 
-impl Rank {
-    pub fn squares(&self) -> &HashSet<Square> {
-        match self {
-            Rank::First => &RANK_1_SQUARES,
-            Rank::Second => &RANK_2_SQUARES,
-            Rank::Third => &RANK_3_SQUARES,
-            Rank::Fourth => &RANK_4_SQUARES,
-            Rank::Fifth => &RANK_5_SQUARES,
-            Rank::Sixth => &RANK_6_SQUARES,
-            Rank::Seventh => &RANK_7_SQUARES,
-            Rank::Eigth => &RANK_8_SQUARES,
-        }
-    }
-}
-
-#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, PartialOrd, Ord)]
 pub enum File {
     A,
     B,
@@ -315,21 +476,6 @@ pub enum File {
     F,
     G,
     H,
-}
-
-impl File {
-    pub fn squares(&self) -> &HashSet<Square> {
-        match self {
-            File::A => &FILE_A_SQUARES,
-            File::B => &FILE_B_SQUARES,
-            File::C => &FILE_C_SQUARES,
-            File::D => &FILE_D_SQUARES,
-            File::E => &FILE_E_SQUARES,
-            File::F => &FILE_F_SQUARES,
-            File::G => &FILE_G_SQUARES,
-            File::H => &FILE_H_SQUARES,
-        }
-    }
 }
 
 #[rustfmt::skip]
@@ -349,6 +495,135 @@ impl Square {
     pub fn from_file_rank(file: &File, rank: &Rank) -> Square {
         FILE_RANK_TO_SQUARE.get(&(file, rank)).unwrap().clone()
     }
+
+    fn index(&self) -> usize {
+        *SQUARE_TO_INDEX.get(self).unwrap()
+    }
+
+    pub fn rank(&self) -> Rank {
+        *SQUARE_TO_RANK.get(self).unwrap()
+    }
+
+    pub fn file(&self) -> File {
+        *SQUARE_TO_FILE.get(self).unwrap()
+    }
+
+    /// I return the square that is n squares north of self.
+    /// If there is no such square, I return None
+    pub fn north(&self, n: usize) -> Option<Square> {
+        debug_assert!(n > 0);
+        let dest_idx = self.index() + (n * 8);
+        if dest_idx >= 64 {
+            None
+        } else {
+            Some(SQUARE_ARRAY[dest_idx].clone())
+        }
+    }
+
+    pub fn north_east(&self, n: usize) -> Option<Square> {
+        debug_assert!(n > 0);
+        let dest_idx = self.index() + (n * 9);
+        if dest_idx >= 64 {
+            return None;
+        }
+
+        let dest_square = SQUARE_ARRAY[dest_idx].clone();
+        if dest_square.file() <= self.file() {
+            None
+        } else {
+            Some(dest_square)
+        }
+    }
+
+    pub fn east(&self, n: usize) -> Option<Square> {
+        debug_assert!(n > 0);
+        let dest_idx = self.index() + n;
+        if dest_idx > 64 {
+            return None;
+        }
+
+        let dest_square = SQUARE_ARRAY[dest_idx].clone();
+        if dest_square.rank() != self.rank() {
+            None
+        } else {
+            Some(dest_square)
+        }
+    }
+
+    pub fn south_east(&self, n: usize) -> Option<Square> {
+        debug_assert!(n > 0);
+        let subtrahend = n * 7;
+        let self_idx = self.index();
+
+        if subtrahend > self.index() {
+            return None;
+        }
+        let dest_square = SQUARE_ARRAY[self_idx - subtrahend].clone();
+        if dest_square.file() <= self.file() {
+            None
+        } else {
+            Some(dest_square)
+        }
+    }
+
+    pub fn south(&self, n: usize) -> Option<Square> {
+        debug_assert!(n > 0);
+        let subtrahend = n * 8;
+        let self_idx = self.index();
+
+        if subtrahend > self.index() {
+            None
+        } else {
+            let dest_square = SQUARE_ARRAY[self_idx - subtrahend].clone();
+            Some(dest_square)
+        }
+    }
+
+    pub fn south_west(&self, n: usize) -> Option<Square> {
+        debug_assert!(n > 0);
+        let subtrahend = n * 9;
+        let self_idx = self.index();
+
+        if subtrahend > self.index() {
+            return None;
+        }
+        let dest_square = SQUARE_ARRAY[self_idx - subtrahend].clone();
+        if dest_square.file() >= self.file() {
+            None
+        } else {
+            Some(dest_square)
+        }
+    }
+
+    pub fn west(&self, n: usize) -> Option<Square> {
+        debug_assert!(n > 0);
+        let self_idx = self.index();
+
+        if n > self.index() {
+            return None;
+        }
+        let dest_square = SQUARE_ARRAY[self_idx - n].clone();
+        if dest_square.rank() != self.rank() {
+            None
+        } else {
+            Some(dest_square)
+        }
+    }
+
+    pub fn north_west(&self, n: usize) -> Option<Square> {
+        debug_assert!(n > 0);
+        let dest_idx = self.index() + (n * 7);
+        if dest_idx >= 64 {
+            return None;
+        }
+
+        let dest_square = SQUARE_ARRAY[dest_idx].clone();
+        if dest_square.file() >= self.file() {
+            None
+        } else {
+            Some(dest_square)
+        }
+    }
 }
 
 #[cfg(test)]
@@ -356,20 +631,123 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_rank_squares() {
-        let rank_1: Rank = Rank::First;
-        assert_eq!(rank_1.squares(), &*RANK_1_SQUARES);
-    }
-
-    #[test]
-    fn test_file_squares() {
-        let rank_1: Rank = Rank::First;
-        assert_eq!(rank_1.squares(), &*RANK_1_SQUARES);
-    }
-
-    #[test]
     fn test_square_from_file_rank() {
         assert_eq!(Square::from_file_rank(&File::A, &Rank::First), Square::A1);
         assert_eq!(Square::from_file_rank(&File::G, &Rank::Fifth), Square::G5);
+    }
+
+    #[test]
+    fn test_north() {
+        assert_eq!(Square::A1.north(1), Some(Square::A2));
+        assert_eq!(Square::A1.north(2), Some(Square::A3));
+        assert_eq!(Square::A8.north(1), None);
+    }
+
+    #[test]
+    fn test_north_east() {
+        assert_eq!(Square::A1.north_east(1), Some(Square::B2));
+        assert_eq!(Square::A1.north_east(2), Some(Square::C3));
+        assert_eq!(Square::H1.north_east(1), None);
+        assert_eq!(Square::A8.north_east(1), None);
+    }
+
+    #[test]
+    fn test_east() {
+        assert_eq!(Square::A1.east(1), Some(Square::B1));
+        assert_eq!(Square::A1.east(4), Some(Square::E1));
+        assert_eq!(Square::H1.north_east(1), None);
+        assert_eq!(Square::H8.north_east(1), None);
+    }
+
+    #[test]
+    fn test_south_east() {
+        assert_eq!(Square::A1.south_east(1), None);
+        assert_eq!(Square::H2.south_east(1), None);
+        assert_eq!(Square::B2.south_east(1), Some(Square::C1));
+    }
+
+    #[test]
+    fn test_south() {
+        assert_eq!(Square::A1.south(1), None);
+        assert_eq!(Square::A2.south(1), Some(Square::A1));
+        assert_eq!(Square::A3.south(2), Some(Square::A1));
+    }
+
+    #[test]
+    fn test_south_west() {
+        assert_eq!(Square::A1.south_west(1), None);
+        assert_eq!(Square::B1.south_west(1), None);
+        assert_eq!(Square::H8.south_west(3), Some(Square::E5));
+    }
+
+    #[test]
+    fn test_west() {
+        assert_eq!(Square::A1.west(1), None);
+        assert_eq!(Square::B2.west(1), Some(Square::A2));
+    }
+
+    #[test]
+    fn test_north_west() {
+        assert_eq!(Square::A1.north_west(1), None);
+        assert_eq!(Square::H8.north_west(2), None);
+        assert_eq!(Square::H1.north_west(3), Some(Square::E4));
+    }
+
+    #[test]
+    fn test_rank_ordered() {
+        let mut jumbled = vec![
+            Rank::Third,
+            Rank::Seventh,
+            Rank::Fourth,
+            Rank::First,
+            Rank::Fifth,
+            Rank::Sixth,
+            Rank::Second,
+            Rank::Eigth,
+        ];
+        jumbled.sort();
+
+        assert_eq!(
+            vec![
+                Rank::First,
+                Rank::Second,
+                Rank::Third,
+                Rank::Fourth,
+                Rank::Fifth,
+                Rank::Sixth,
+                Rank::Seventh,
+                Rank::Eigth,
+            ],
+            jumbled
+        )
+    }
+
+    #[test]
+    fn test_file_ordered() {
+        let mut jumbled = vec![
+            File::C,
+            File::B,
+            File::H,
+            File::E,
+            File::A,
+            File::G,
+            File::F,
+            File::D,
+        ];
+        jumbled.sort();
+
+        assert_eq!(
+            vec![
+                File::A,
+                File::B,
+                File::C,
+                File::D,
+                File::E,
+                File::F,
+                File::G,
+                File::H,
+            ],
+            jumbled
+        )
     }
 }
