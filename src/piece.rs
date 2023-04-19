@@ -1,4 +1,4 @@
-use crate::board::{File, Rank, Square};
+use crate::board::Square;
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub enum PieceColor {
@@ -16,49 +16,61 @@ pub enum PieceRole {
     Queen,
 }
 
-pub trait Piece {
-    fn color(&self) -> &PieceColor;
-
-    fn role(&self) -> &PieceRole;
-
-    fn square(&self) -> &Square;
+pub struct Move {
+    from: Piece,
+    to: Piece,
+    is_capture: bool,
 }
 
-pub struct Pawn {
-    color: PieceColor,
-    square: Square,
-}
+impl Move {
+    fn new(from: Piece, destination_square: Square, is_capture: bool) -> Move {
+        let to = Piece::new(
+            from.role.clone(),
+            from.color.clone(),
+            destination_square,
+            true,
+        );
 
-impl Pawn {
-    pub fn new(color: PieceColor, file: &File, rank: &Rank) -> Pawn {
-        Pawn {
-            color,
-            square: Square::from_file_rank(file, rank),
+        Move {
+            from,
+            to,
+            is_capture,
         }
     }
 }
 
-impl Piece for Pawn {
-    fn color(&self) -> &PieceColor {
-        &self.color
-    }
-    fn role(&self) -> &PieceRole {
-        &PieceRole::Pawn
-    }
-    fn square(&self) -> &Square {
-        &self.square
-    }
+pub struct Piece {
+    role: PieceRole,
+    color: PieceColor,
+    square: Square,
+    has_moved: bool,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+impl Piece {
+    pub fn new(role: PieceRole, color: PieceColor, square: Square, has_moved: bool) -> Piece {
+        Piece {
+            role,
+            color,
+            square,
+            has_moved,
+        }
+    }
 
-    #[test]
-    fn test_pawn_properties() {
-        let pawn = Pawn::new(PieceColor::White, &File::A, &Rank::Second);
-        assert_eq!(pawn.color(), &PieceColor::White);
-        assert_eq!(pawn.role(), &PieceRole::Pawn);
-        assert_eq!(pawn.square(), &Square::A2);
+    /// I return all squares accesible from my position
+    /// in one move. I do not know anything about game state.
+    pub fn candidate_moves(&self) -> Vec<Move> {
+        match self.role {
+            PieceRole::Pawn => self.pawn_candidate_moves(),
+            PieceRole::Rook => Vec::new(),
+            PieceRole::Knight => Vec::new(),
+            PieceRole::Bishop => Vec::new(),
+            PieceRole::King => Vec::new(),
+            PieceRole::Queen => Vec::new(),
+        }
+    }
+
+    fn pawn_candidate_moves(&self) -> Vec<Move> {
+        let mut moves: Vec<Move> = Vec::new();
+        moves
     }
 }
