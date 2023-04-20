@@ -1,10 +1,10 @@
 use std::{
-    collections::{HashMap, HashSet},
+    collections::HashMap,
     hash::Hash,
 };
 
 lazy_static! {
-    static ref FILE_A_SQUARES: HashSet<Square> = [
+    static ref FILE_A_SQUARES: Vec<Square> = [
         Square::A1,
         Square::A2,
         Square::A3,
@@ -16,7 +16,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref FILE_B_SQUARES: HashSet<Square> = [
+    static ref FILE_B_SQUARES: Vec<Square> = [
         Square::B1,
         Square::B2,
         Square::B3,
@@ -28,7 +28,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref FILE_C_SQUARES: HashSet<Square> = [
+    static ref FILE_C_SQUARES: Vec<Square> = [
         Square::C1,
         Square::C2,
         Square::C3,
@@ -40,7 +40,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref FILE_D_SQUARES: HashSet<Square> = [
+    static ref FILE_D_SQUARES: Vec<Square> = [
         Square::D1,
         Square::D2,
         Square::D3,
@@ -52,7 +52,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref FILE_E_SQUARES: HashSet<Square> = [
+    static ref FILE_E_SQUARES: Vec<Square> = [
         Square::E1,
         Square::E2,
         Square::E3,
@@ -64,7 +64,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref FILE_F_SQUARES: HashSet<Square> = [
+    static ref FILE_F_SQUARES: Vec<Square> = [
         Square::F1,
         Square::F2,
         Square::F3,
@@ -76,7 +76,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref FILE_G_SQUARES: HashSet<Square> = [
+    static ref FILE_G_SQUARES: Vec<Square> = [
         Square::G1,
         Square::G2,
         Square::G3,
@@ -88,7 +88,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref FILE_H_SQUARES: HashSet<Square> = [
+    static ref FILE_H_SQUARES: Vec<Square> = [
         Square::H1,
         Square::H2,
         Square::H3,
@@ -100,7 +100,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref RANK_1_SQUARES: HashSet<Square> = [
+    static ref RANK_1_SQUARES: Vec<Square> = [
         Square::A1,
         Square::B1,
         Square::C1,
@@ -112,7 +112,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref RANK_2_SQUARES: HashSet<Square> = [
+    static ref RANK_2_SQUARES: Vec<Square> = [
         Square::A2,
         Square::B2,
         Square::C2,
@@ -124,7 +124,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref RANK_3_SQUARES: HashSet<Square> = [
+    static ref RANK_3_SQUARES: Vec<Square> = [
         Square::A3,
         Square::B3,
         Square::C3,
@@ -136,7 +136,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref RANK_4_SQUARES: HashSet<Square> = [
+    static ref RANK_4_SQUARES: Vec<Square> = [
         Square::A4,
         Square::B4,
         Square::C4,
@@ -148,7 +148,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref RANK_5_SQUARES: HashSet<Square> = [
+    static ref RANK_5_SQUARES: Vec<Square> = [
         Square::A5,
         Square::B5,
         Square::C5,
@@ -160,7 +160,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref RANK_6_SQUARES: HashSet<Square> = [
+    static ref RANK_6_SQUARES: Vec<Square> = [
         Square::A6,
         Square::B6,
         Square::C6,
@@ -172,7 +172,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref RANK_7_SQUARES: HashSet<Square> = [
+    static ref RANK_7_SQUARES: Vec<Square> = [
         Square::A7,
         Square::B7,
         Square::C7,
@@ -184,7 +184,7 @@ lazy_static! {
     ]
     .into_iter()
     .collect();
-    static ref RANK_8_SQUARES: HashSet<Square> = [
+    static ref RANK_8_SQUARES: Vec<Square> = [
         Square::A8,
         Square::B8,
         Square::C8,
@@ -502,6 +502,32 @@ impl Square {
 
     pub fn rank(&self) -> Rank {
         *SQUARE_TO_RANK.get(self).unwrap()
+    }
+
+    pub fn rank_squares(&self) -> Vec<Square> {
+        match self.rank() {
+            Rank::First => RANK_1_SQUARES.iter().cloned().collect(),
+            Rank::Second => RANK_2_SQUARES.iter().cloned().collect(),
+            Rank::Third => RANK_3_SQUARES.iter().cloned().collect(),
+            Rank::Fourth => RANK_4_SQUARES.iter().cloned().collect(),
+            Rank::Fifth => RANK_5_SQUARES.iter().cloned().collect(),
+            Rank::Sixth => RANK_6_SQUARES.iter().cloned().collect(),
+            Rank::Seventh => RANK_7_SQUARES.iter().cloned().collect(),
+            Rank::Eigth => RANK_8_SQUARES.iter().cloned().collect(),
+        }
+    }
+
+    pub fn file_squares(&self) -> Vec<Square> {
+        match self.file() {
+            File::A => FILE_A_SQUARES.iter().cloned().collect(),
+            File::B => FILE_B_SQUARES.iter().cloned().collect(),
+            File::C => FILE_C_SQUARES.iter().cloned().collect(),
+            File::D => FILE_D_SQUARES.iter().cloned().collect(),
+            File::E => FILE_E_SQUARES.iter().cloned().collect(),
+            File::F => FILE_F_SQUARES.iter().cloned().collect(),
+            File::G => FILE_G_SQUARES.iter().cloned().collect(),
+            File::H => FILE_H_SQUARES.iter().cloned().collect(),
+        }
     }
 
     pub fn file(&self) -> File {
