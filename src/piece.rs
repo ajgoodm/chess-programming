@@ -119,7 +119,7 @@ impl Piece {
     fn rook_candidate_moves(&self) -> HashSet<Move> {
         let mut squares = self
             .square
-            .file_squares()
+            .rank_squares()
             .into_iter()
             .collect::<HashSet<Square>>();
         squares.extend(self.square.file_squares());
@@ -135,6 +135,7 @@ impl Piece {
 mod tests {
     use std::collections::HashSet;
 
+    use crate::board::{File, Rank};
     use super::*;
 
     #[test]
@@ -186,5 +187,15 @@ mod tests {
                 .collect::<HashSet<Square>>()
         );
         assert!(moves.iter().all(|m| m.to.has_moved));
+    }
+
+    #[test]
+    fn test_rook_moves() {
+        let a1_rook = Piece::new(PieceRole::Rook, PieceColor::White, Square::A1, false);
+        let moves = a1_rook.candidate_moves();
+        assert_eq!(moves.len(), 14); // 1st rank and A file but not A1
+        assert!(moves.iter().all(|move_| {
+            move_.to.square.rank() == Rank::First || move_.to.square.file() == File::A
+        }));
     }
 }

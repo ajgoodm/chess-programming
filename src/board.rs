@@ -1,7 +1,4 @@
-use std::{
-    collections::HashMap,
-    hash::Hash,
-};
+use std::{collections::HashMap, hash::Hash};
 
 lazy_static! {
     static ref FILE_A_SQUARES: Vec<Square> = [
