@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use crate::board::Square;
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
@@ -16,14 +18,15 @@ pub enum PieceRole {
     Queen,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Move {
     from: Piece,
     to: Piece,
-    is_capture: bool,
+    requires_capture: bool,
 }
 
 impl Move {
-    fn new(from: Piece, destination_square: Square, is_capture: bool) -> Move {
+    fn new(from: Piece, destination_square: Square, requires_capture: bool) -> Move {
         let to = Piece::new(
             from.role.clone(),
             from.color.clone(),
@@ -34,12 +37,12 @@ impl Move {
         Move {
             from,
             to,
-            is_capture,
+            requires_capture,
         }
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Piece {
     role: PieceRole,
     color: PieceColor,
@@ -59,19 +62,19 @@ impl Piece {
 
     /// I return all squares accesible from my position
     /// in one move. I do not know anything about game state.
-    pub fn candidate_moves(&self) -> Vec<Move> {
+    pub fn candidate_moves(&self) -> HashSet<Move> {
         match self.role {
             PieceRole::Pawn => self.pawn_candidate_moves(),
-            PieceRole::Rook => Vec::new(),
-            PieceRole::Knight => Vec::new(),
-            PieceRole::Bishop => Vec::new(),
-            PieceRole::King => Vec::new(),
-            PieceRole::Queen => Vec::new(),
+            PieceRole::Rook => self.rook_candidate_moves(),
+            PieceRole::Knight => HashSet::new(),
+            PieceRole::Bishop => HashSet::new(),
+            PieceRole::King => HashSet::new(),
+            PieceRole::Queen => HashSet::new(),
         }
     }
 
-    fn pawn_candidate_moves(&self) -> Vec<Move> {
-        let mut moves: Vec<Move>;
+    fn pawn_candidate_moves(&self) -> HashSet<Move> {
+        let mut moves: HashSet<Move>;
         match self.color {
             PieceColor::White => {
                 moves = [
@@ -81,11 +84,13 @@ impl Piece {
                 ]
                 .into_iter()
                 .filter(|(square, _)| Option::is_some(square))
-                .map(|(square, is_capture)| Move::new(self.clone(), square.unwrap(), is_capture))
+                .map(|(square, requires_capture)| {
+                    Move::new(self.clone(), square.unwrap(), requires_capture)
+                })
                 .collect();
                 if !self.has_moved {
                     if let Some(double_move_sq) = self.square.north(2) {
-                        moves.push(Move::new(self.clone(), double_move_sq, false));
+                        moves.insert(Move::new(self.clone(), double_move_sq, false));
                     }
                 }
             }
@@ -97,16 +102,32 @@ impl Piece {
                 ]
                 .into_iter()
                 .filter(|(square, _)| Option::is_some(square))
-                .map(|(square, is_capture)| Move::new(self.clone(), square.unwrap(), is_capture))
+                .map(|(square, requires_capture)| {
+                    Move::new(self.clone(), square.unwrap(), requires_capture)
+                })
                 .collect();
                 if !self.has_moved {
                     if let Some(double_move_sq) = self.square.south(2) {
-                        moves.push(Move::new(self.clone(), double_move_sq, false));
+                        moves.insert(Move::new(self.clone(), double_move_sq, false));
                     }
                 }
             }
         }
         moves
+    }
+
+    fn rook_candidate_moves(&self) -> HashSet<Move> {
+        let mut squares = self
+            .square
+            .rank_squares()
+            .into_iter()
+            .collect::<HashSet<Square>>();
+        squares.extend(self.square.file_squares());
+        squares.remove(&self.square);
+        squares
+            .into_iter()
+            .map(|square| Move::new(self.clone(), square, false))
+            .collect()
     }
 }
 
@@ -114,6 +135,7 @@ impl Piece {
 mod tests {
     use std::collections::HashSet;
 
+    use crate::board::{File, Rank};
     use super::*;
 
     #[test]
@@ -165,5 +187,15 @@ mod tests {
                 .collect::<HashSet<Square>>()
         );
         assert!(moves.iter().all(|m| m.to.has_moved));
+    }
+
+    #[test]
+    fn test_rook_moves() {
+        let a1_rook = Piece::new(PieceRole::Rook, PieceColor::White, Square::A1, false);
+        let moves = a1_rook.candidate_moves();
+        assert_eq!(moves.len(), 14); // 1st rank and A file but not A1
+        assert!(moves.iter().all(|move_| {
+            move_.to.square.rank() == Rank::First || move_.to.square.file() == File::A
+        }));
     }
 }
