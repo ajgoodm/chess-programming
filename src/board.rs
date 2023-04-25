@@ -1,3 +1,4 @@
+use std::slice::Iter;
 use std::{collections::HashMap, hash::Hash};
 
 lazy_static! {
@@ -463,6 +464,22 @@ pub enum Rank {
     Eigth,
 }
 
+impl Rank {
+    pub fn iterator() -> Iter<'static, Rank> {
+        static RANKS: [Rank; 8] = [
+            Rank::First,
+            Rank::Second,
+            Rank::Third,
+            Rank::Fourth,
+            Rank::Fifth,
+            Rank::Sixth,
+            Rank::Seventh,
+            Rank::Eigth,
+        ];
+        RANKS.iter()
+    }
+}
+
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, PartialOrd, Ord)]
 pub enum File {
     A,
@@ -473,6 +490,22 @@ pub enum File {
     F,
     G,
     H,
+}
+
+impl File {
+    pub fn iterator() -> Iter<'static, File> {
+        static FILES: [File; 8] = [
+            File::A,
+            File::B,
+            File::C,
+            File::D,
+            File::E,
+            File::F,
+            File::G,
+            File::H,
+        ];
+        FILES.iter()
+    }
 }
 
 #[rustfmt::skip]
@@ -491,6 +524,36 @@ pub enum Square {
 impl Square {
     pub fn from_file_rank(file: &File, rank: &Rank) -> Square {
         FILE_RANK_TO_SQUARE.get(&(file, rank)).unwrap().clone()
+    }
+
+    pub fn from_rf_str(file_rank: &str) -> Square {
+        assert_eq!(file_rank.len(), 2);
+        let mut chars = file_rank.chars();
+        let file = match chars.next().unwrap() {
+            'a' | 'A' => File::A,
+            'b' | 'B' => File::B,
+            'c' | 'C' => File::C,
+            'd' | 'D' => File::D,
+            'e' | 'E' => File::E,
+            'f' | 'F' => File::F,
+            'g' | 'G' => File::G,
+            'h' | 'H' => File::H,
+            _ => panic!("unexpected square str {}", file_rank),
+        };
+
+        let rank = match chars.next().unwrap() {
+            '1' => Rank::First,
+            '2' => Rank::Second,
+            '3' => Rank::Third,
+            '4' => Rank::Fourth,
+            '5' => Rank::Fifth,
+            '6' => Rank::Sixth,
+            '7' => Rank::Seventh,
+            '8' => Rank::Eigth,
+            _ => panic!("unexpected square str {}", file_rank),
+        };
+
+        Square::from_file_rank(&file, &rank)
     }
 
     fn index(&self) -> usize {
