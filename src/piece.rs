@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use crate::board::Square;
+use crate::board::{Rank, Square};
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub enum PieceColor {
@@ -27,12 +27,7 @@ pub struct Move {
 
 impl Move {
     fn new(from: Piece, destination_square: Square, requires_capture: bool) -> Move {
-        let to = Piece::new(
-            from.role.clone(),
-            from.color.clone(),
-            destination_square,
-            true,
-        );
+        let to = Piece::new(from.role.clone(), from.color.clone(), destination_square);
 
         Move {
             from,
@@ -47,16 +42,14 @@ pub struct Piece {
     role: PieceRole,
     color: PieceColor,
     square: Square,
-    has_moved: bool,
 }
 
 impl Piece {
-    pub fn new(role: PieceRole, color: PieceColor, square: Square, has_moved: bool) -> Piece {
+    pub fn new(role: PieceRole, color: PieceColor, square: Square) -> Piece {
         Piece {
             role,
             color,
             square,
-            has_moved,
         }
     }
 
@@ -88,7 +81,7 @@ impl Piece {
                     Move::new(self.clone(), square.unwrap(), requires_capture)
                 })
                 .collect();
-                if !self.has_moved {
+                if self.square.rank() == Rank::Second {
                     if let Some(double_move_sq) = self.square.north(2) {
                         moves.insert(Move::new(self.clone(), double_move_sq, false));
                     }
@@ -106,7 +99,7 @@ impl Piece {
                     Move::new(self.clone(), square.unwrap(), requires_capture)
                 })
                 .collect();
-                if !self.has_moved {
+                if self.square.rank() == Rank::Seventh {
                     if let Some(double_move_sq) = self.square.south(2) {
                         moves.insert(Move::new(self.clone(), double_move_sq, false));
                     }
@@ -135,12 +128,12 @@ impl Piece {
 mod tests {
     use std::collections::HashSet;
 
-    use crate::board::{File, Rank};
     use super::*;
+    use crate::board::{File, Rank};
 
     #[test]
     fn test_pawn_moves_white() {
-        let b2_pawn = Piece::new(PieceRole::Pawn, PieceColor::White, Square::B2, false);
+        let b2_pawn = Piece::new(PieceRole::Pawn, PieceColor::White, Square::B2);
         let moves = b2_pawn.candidate_moves();
         assert_eq!(moves.len(), 4);
         assert_eq!(
@@ -152,12 +145,11 @@ mod tests {
                 .into_iter()
                 .collect::<HashSet<Square>>()
         );
-        assert!(moves.iter().all(|m| m.to.has_moved));
     }
 
     #[test]
     fn test_pawn_white_has_moved() {
-        let a3_pawn = Piece::new(PieceRole::Pawn, PieceColor::White, Square::A3, true);
+        let a3_pawn = Piece::new(PieceRole::Pawn, PieceColor::White, Square::A3);
         let moves = a3_pawn.candidate_moves();
         assert_eq!(moves.len(), 2);
         assert_eq!(
@@ -169,12 +161,11 @@ mod tests {
                 .into_iter()
                 .collect::<HashSet<Square>>()
         );
-        assert!(moves.iter().all(|m| m.to.has_moved));
     }
 
     #[test]
     fn test_pawn_moves_black() {
-        let b7_pawn = Piece::new(PieceRole::Pawn, PieceColor::Black, Square::B7, false);
+        let b7_pawn = Piece::new(PieceRole::Pawn, PieceColor::Black, Square::B7);
         let moves = b7_pawn.candidate_moves();
         assert_eq!(moves.len(), 4);
         assert_eq!(
@@ -186,12 +177,11 @@ mod tests {
                 .into_iter()
                 .collect::<HashSet<Square>>()
         );
-        assert!(moves.iter().all(|m| m.to.has_moved));
     }
 
     #[test]
     fn test_rook_moves() {
-        let a1_rook = Piece::new(PieceRole::Rook, PieceColor::White, Square::A1, false);
+        let a1_rook = Piece::new(PieceRole::Rook, PieceColor::White, Square::A1);
         let moves = a1_rook.candidate_moves();
         assert_eq!(moves.len(), 14); // 1st rank and A file but not A1
         assert!(moves.iter().all(|move_| {
