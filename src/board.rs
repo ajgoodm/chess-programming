@@ -450,6 +450,50 @@ lazy_static! {
         m.insert(Square::H8, File::H);
         m
     };
+
+    static ref NE_A8_DIAG: Vec<Square> = vec![Square::A8];
+    static ref NE_A7_DIAG: Vec<Square> = vec![
+        Square::A7, Square::B8,
+    ];
+    static ref NE_A6_DIAG: Vec<Square> = vec![
+        Square::A6, Square::B7, Square::C8,
+    ];
+    static ref NE_A5_DIAG: Vec<Square> = vec![
+        Square::A5, Square::B6, Square::C7, Square::D8,
+    ];
+    static ref NE_A4_DIAG: Vec<Square> = vec![
+        Square::A4, Square::B5, Square::C6, Square::D7, Square::E8,
+    ];
+    static ref NE_A3_DIAG: Vec<Square> = vec![
+        Square::A3, Square::B4, Square::C5, Square::D6, Square::E7, Square::F8,
+    ];
+    static ref NE_A2_DIAG: Vec<Square> = vec![
+        Square::A2, Square::B3, Square::C4, Square::D5, Square::E6, Square::F7, Square::G8,
+    ];
+    static ref NE_A1_DIAG: Vec<Square> = vec![
+        Square::A1, Square::B2, Square::C3, Square::D4, Square::E5, Square::F6, Square::G7, Square::H8,
+    ];
+    static ref NE_B1_DIAG: Vec<Square> = vec![
+        Square::B1, Square::C2, Square::D3, Square::E4, Square::F5, Square::G6, Square::H7,
+    ];
+    static ref NE_C1_DIAG: Vec<Square> = vec![
+        Square::C1, Square::D2, Square::E3, Square::F4, Square::G5, Square::H6,
+    ];
+    static ref NE_D1_DIAG: Vec<Square> = vec![
+        Square::D1, Square::E2, Square::F3, Square::G4, Square::H5,
+    ];
+    static ref NE_E1_DIAG: Vec<Square> = vec![
+        Square::E1, Square::F2, Square::G3, Square::H4,
+    ];
+    static ref NE_F1_DIAG: Vec<Square> = vec![
+        Square::F1, Square::G2, Square::H3,
+    ];
+    static ref NE_G1_DIAG: Vec<Square> = vec![
+        Square::G1, Square::H2,
+    ];
+    static ref NE_H1_DIAG: Vec<Square> = vec![
+        Square::H1,
+    ];
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, PartialOrd, Ord)]
@@ -714,6 +758,8 @@ impl Square {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::HashSet;
+
     use super::*;
 
     #[test]
@@ -835,5 +881,27 @@ mod tests {
             ],
             jumbled
         )
+    }
+
+    #[test]
+    fn test_ne_diagonals() {
+        let all_squares: HashSet<Square> = vec![
+            NE_A8_DIAG.iter().cloned(),
+            NE_A7_DIAG.iter().cloned(),
+            NE_A6_DIAG.iter().cloned(),
+            NE_A5_DIAG.iter().cloned(),
+            NE_A4_DIAG.iter().cloned(),
+            NE_A3_DIAG.iter().cloned(),
+            NE_A2_DIAG.iter().cloned(),
+            NE_A1_DIAG.iter().cloned(),
+            NE_B1_DIAG.iter().cloned(),
+            NE_C1_DIAG.iter().cloned(),
+            NE_D1_DIAG.iter().cloned(),
+            NE_E1_DIAG.iter().cloned(),
+            NE_F1_DIAG.iter().cloned(),
+            NE_G1_DIAG.iter().cloned(),
+            NE_H1_DIAG.iter().cloned(),
+        ].into_iter().flatten().collect();
+        assert_eq!(all_squares.len(), 64);
     }
 }
