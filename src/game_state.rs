@@ -16,7 +16,7 @@ pub struct GameState {
     halfmove_clock: usize,
     fullmove_number: usize,
     castling_rights: HashSet<CastlingRights>,
-    en_passant_targets: HashSet<Square>,
+    en_passant_target: Option<Square>,
 }
 
 impl GameState {
@@ -28,7 +28,7 @@ impl GameState {
         let (white_pieces, black_pieces) = fen_serialization::parse_pieces(parts[0]);
         let to_play = fen_serialization::parse_to_play(parts[1]);
         let castling_rights = fen_serialization::parse_castle_rights(parts[2]);
-        let en_passant_targets = fen_serialization::parse_en_passant_squares(parts[3]);
+        let en_passant_target = fen_serialization::parse_en_passant_square(parts[3]);
         let halfmove_clock: usize = parts[4]
             .parse::<usize>()
             .expect("failed to parse halfmove clock");
@@ -43,7 +43,7 @@ impl GameState {
             halfmove_clock,
             fullmove_number,
             castling_rights,
-            en_passant_targets,
+            en_passant_target,
         }
     }
 

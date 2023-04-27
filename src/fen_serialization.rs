@@ -81,15 +81,11 @@ pub fn parse_castle_rights(castle_rights: &str) -> HashSet<CastlingRights> {
     result
 }
 
-pub fn parse_en_passant_squares(targets: &str) -> HashSet<Square> {
-    let mut squares: HashSet<Square> = HashSet::new();
-    assert!(targets.len() % 2 == 0);
-    for idx in 0usize..(targets.len() / 2) {
-        let start = idx * 2;
-        squares.insert(Square::from_rf_str(&targets[start..start + 2]));
+pub fn parse_en_passant_square(target_str: &str) -> Option<Square> {
+    match target_str {
+        "-" => None,
+        _ => Some(Square::from_rf_str(target_str)),
     }
-
-    squares
 }
 
 #[cfg(test)]
