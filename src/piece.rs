@@ -61,7 +61,7 @@ impl Piece {
             PieceRole::Rook => self.rook_candidate_moves(),
             PieceRole::Knight => HashSet::new(),
             PieceRole::Bishop => self.bishop_candidate_moves(),
-            PieceRole::King => HashSet::new(),
+            PieceRole::King => self.king_candidate_moves(),
             PieceRole::Queen => self.queen_candidate_moves(),
         }
     }
@@ -139,10 +139,10 @@ impl Piece {
 
     fn queen_candidate_moves(&self) -> HashSet<Move> {
         let mut squares = self
-        .square
-        .file_squares()
-        .into_iter()
-        .collect::<HashSet<Square>>();
+            .square
+            .file_squares()
+            .into_iter()
+            .collect::<HashSet<Square>>();
         squares.extend(self.square.rank_squares());
         squares.extend(self.square.ne_diagonal_squares());
         squares.extend(self.square.nw_diagonal_squares());
@@ -151,6 +151,25 @@ impl Piece {
             .into_iter()
             .map(|square| Move::new(self.clone(), square, false))
             .collect()
+    }
+
+    /// King candidate moves consider castling rights
+    /// or threatened squares. These must be considered
+    /// in the context of a GameState
+    fn king_candidate_moves(&self) -> HashSet<Move> {
+        [
+            self.square.north(1),
+            self.square.north_east(1),
+            self.square.east(1),
+            self.square.south_east(1),
+            self.square.south(1),
+            self.square.south_west(1),
+            self.square.west(1),
+            self.square.north_west(1)
+        ].into_iter()
+        .filter(|x| Option::is_some(x))
+        .map(|square| Move::new(self.clone(), square.unwrap(), false))
+        .collect()
     }
 }
 
@@ -231,5 +250,11 @@ mod tests {
     fn test_queen_candidate_moves() {
         let a1_queen = Piece::new(PieceRole::Queen, PieceColor::White, Square::A1);
         assert_eq!(a1_queen.candidate_moves().len(), 21);
+    }
+
+    #[test]
+    fn test_king_candidate_moves() {
+        let b1_king = Piece::new(PieceRole::King, PieceColor::White, Square::B1);
+        assert_eq!(b1_king.candidate_moves().len(), 5);
     }
 }
