@@ -59,7 +59,7 @@ impl Piece {
         match self.role {
             PieceRole::Pawn => self.pawn_candidate_moves(),
             PieceRole::Rook => self.rook_candidate_moves(),
-            PieceRole::Knight => HashSet::new(),
+            PieceRole::Knight => self.knight_candidate_moves(),
             PieceRole::Bishop => self.bishop_candidate_moves(),
             PieceRole::King => self.king_candidate_moves(),
             PieceRole::Queen => self.queen_candidate_moves(),
@@ -165,8 +165,33 @@ impl Piece {
             self.square.south(1),
             self.square.south_west(1),
             self.square.west(1),
-            self.square.north_west(1)
-        ].into_iter()
+            self.square.north_west(1),
+        ]
+        .into_iter()
+        .filter(|x| Option::is_some(x))
+        .map(|square| Move::new(self.clone(), square.unwrap(), false))
+        .collect()
+    }
+
+    fn knight_candidate_moves(&self) -> HashSet<Move> {
+        let mut squares: HashSet::<Option<Square>> = HashSet::new();
+        if let Some(n) = self.square.north(2) {
+            squares.insert(n.east(1));
+            squares.insert(n.west(1));
+        }
+        if let Some(e) = self.square.east(2) {
+            squares.insert(e.north(1));
+            squares.insert(e.south(1));
+        }
+        if let Some(s) = self.square.south(2) {
+            squares.insert(s.east(1));
+            squares.insert(s.west(1));
+        }
+        if let Some(w) = self.square.west(2) {
+            squares.insert(w.north(1));
+            squares.insert(w.south(1));
+        }
+        squares.into_iter()
         .filter(|x| Option::is_some(x))
         .map(|square| Move::new(self.clone(), square.unwrap(), false))
         .collect()
@@ -256,5 +281,14 @@ mod tests {
     fn test_king_candidate_moves() {
         let b1_king = Piece::new(PieceRole::King, PieceColor::White, Square::B1);
         assert_eq!(b1_king.candidate_moves().len(), 5);
+    }
+
+    #[test]
+    fn test_knight_moves() {
+        let d4_knight = Piece::new(PieceRole::Knight, PieceColor::White, Square::D4);
+        assert_eq!(d4_knight.candidate_moves().len(), 8);
+
+        let a1_knight = Piece::new(PieceRole::Knight, PieceColor::White, Square::A1);
+        assert_eq!(a1_knight.candidate_moves().len(), 2);
     }
 }
