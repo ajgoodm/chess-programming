@@ -597,6 +597,62 @@ impl File {
     }
 }
 
+pub enum NEDiagonal {
+    A8, A7, A6, A5, A4, A3, A2, A1,
+    B1, C1, D1, E1, F1, G1, H1,
+}
+
+impl NEDiagonal {
+    pub fn iterator() -> Iter<'static, NEDiagonal> {
+        static NE_DIAGONALS: [NEDiagonal; 15] = [
+            NEDiagonal::A8,
+            NEDiagonal::A7,
+            NEDiagonal::A6,
+            NEDiagonal::A5,
+            NEDiagonal::A4,
+            NEDiagonal::A3,
+            NEDiagonal::A2,
+            NEDiagonal::A1,
+            NEDiagonal::B1,
+            NEDiagonal::C1,
+            NEDiagonal::D1,
+            NEDiagonal::E1,
+            NEDiagonal::F1,
+            NEDiagonal::G1,
+            NEDiagonal::H1,
+        ];
+        NE_DIAGONALS.iter()
+    }
+}
+
+pub enum NWDiagonal {
+    H8, H7, H6, H5, H4, H3, H2, H1,
+    G1, F1, E1, D1, C1, B1, A1,
+}
+
+impl NWDiagonal {
+    pub fn iterator() -> Iter<'static, NWDiagonal> {
+        static NW_DIAGONALS: [NWDiagonal; 15] = [
+            NWDiagonal::H8,
+            NWDiagonal::H7,
+            NWDiagonal::H6,
+            NWDiagonal::H5,
+            NWDiagonal::H4,
+            NWDiagonal::H3,
+            NWDiagonal::H2,
+            NWDiagonal::H1,
+            NWDiagonal::G1,
+            NWDiagonal::F1,
+            NWDiagonal::E1,
+            NWDiagonal::D1,
+            NWDiagonal::C1,
+            NWDiagonal::B1,
+            NWDiagonal::A1,
+        ];
+        NW_DIAGONALS.iter()
+    }
+}
+
 #[rustfmt::skip]
 #[derive(Debug, PartialEq, Eq, Hash, Clone)]
 pub enum Square {
