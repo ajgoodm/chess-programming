@@ -62,7 +62,7 @@ impl Piece {
             PieceRole::Knight => HashSet::new(),
             PieceRole::Bishop => self.bishop_candidate_moves(),
             PieceRole::King => HashSet::new(),
-            PieceRole::Queen => HashSet::new(),
+            PieceRole::Queen => self.queen_candidate_moves(),
         }
     }
 
@@ -129,6 +129,22 @@ impl Piece {
             .ne_diagonal_squares()
             .into_iter()
             .collect::<HashSet<Square>>();
+        squares.extend(self.square.nw_diagonal_squares());
+        squares.remove(&self.square);
+        squares
+            .into_iter()
+            .map(|square| Move::new(self.clone(), square, false))
+            .collect()
+    }
+
+    fn queen_candidate_moves(&self) -> HashSet<Move> {
+        let mut squares = self
+        .square
+        .file_squares()
+        .into_iter()
+        .collect::<HashSet<Square>>();
+        squares.extend(self.square.rank_squares());
+        squares.extend(self.square.ne_diagonal_squares());
         squares.extend(self.square.nw_diagonal_squares());
         squares.remove(&self.square);
         squares
@@ -209,5 +225,11 @@ mod tests {
         assert_eq!(a1_bishop.candidate_moves().len(), 7);
         let b2_bishop = Piece::new(PieceRole::Bishop, PieceColor::White, Square::B2);
         assert_eq!(b2_bishop.candidate_moves().len(), 9);
+    }
+
+    #[test]
+    fn test_queen_candidate_moves() {
+        let a1_queen = Piece::new(PieceRole::Queen, PieceColor::White, Square::A1);
+        assert_eq!(a1_queen.candidate_moves().len(), 21);
     }
 }
