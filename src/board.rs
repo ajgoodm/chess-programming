@@ -301,155 +301,251 @@ lazy_static! {
 
     static ref SQUARE_TO_RANK: HashMap<Square, Rank> = {
         let mut m: HashMap<Square, Rank> = HashMap::new();
-        m.insert(Square::A1, Rank::First);
-        m.insert(Square::B1, Rank::First);
-        m.insert(Square::C1, Rank::First);
-        m.insert(Square::D1, Rank::First);
-        m.insert(Square::E1, Rank::First);
-        m.insert(Square::F1, Rank::First);
-        m.insert(Square::G1, Rank::First);
-        m.insert(Square::H1, Rank::First);
-
-        m.insert(Square::A2, Rank::Second);
-        m.insert(Square::B2, Rank::Second);
-        m.insert(Square::C2, Rank::Second);
-        m.insert(Square::D2, Rank::Second);
-        m.insert(Square::E2, Rank::Second);
-        m.insert(Square::F2, Rank::Second);
-        m.insert(Square::G2, Rank::Second);
-        m.insert(Square::H2, Rank::Second);
-
-        m.insert(Square::A3, Rank::Third);
-        m.insert(Square::B3, Rank::Third);
-        m.insert(Square::C3, Rank::Third);
-        m.insert(Square::D3, Rank::Third);
-        m.insert(Square::E3, Rank::Third);
-        m.insert(Square::F3, Rank::Third);
-        m.insert(Square::G3, Rank::Third);
-        m.insert(Square::H3, Rank::Third);
-
-        m.insert(Square::A4, Rank::Fourth);
-        m.insert(Square::B4, Rank::Fourth);
-        m.insert(Square::C4, Rank::Fourth);
-        m.insert(Square::D4, Rank::Fourth);
-        m.insert(Square::E4, Rank::Fourth);
-        m.insert(Square::F4, Rank::Fourth);
-        m.insert(Square::G4, Rank::Fourth);
-        m.insert(Square::H4, Rank::Fourth);
-
-        m.insert(Square::A5, Rank::Fifth);
-        m.insert(Square::B5, Rank::Fifth);
-        m.insert(Square::C5, Rank::Fifth);
-        m.insert(Square::D5, Rank::Fifth);
-        m.insert(Square::E5, Rank::Fifth);
-        m.insert(Square::F5, Rank::Fifth);
-        m.insert(Square::G5, Rank::Fifth);
-        m.insert(Square::H5, Rank::Fifth);
-
-        m.insert(Square::A6, Rank::Sixth);
-        m.insert(Square::B6, Rank::Sixth);
-        m.insert(Square::C6, Rank::Sixth);
-        m.insert(Square::D6, Rank::Sixth);
-        m.insert(Square::E6, Rank::Sixth);
-        m.insert(Square::F6, Rank::Sixth);
-        m.insert(Square::G6, Rank::Sixth);
-        m.insert(Square::H6, Rank::Sixth);
-
-        m.insert(Square::A7, Rank::Seventh);
-        m.insert(Square::B7, Rank::Seventh);
-        m.insert(Square::C7, Rank::Seventh);
-        m.insert(Square::D7, Rank::Seventh);
-        m.insert(Square::E7, Rank::Seventh);
-        m.insert(Square::F7, Rank::Seventh);
-        m.insert(Square::G7, Rank::Seventh);
-        m.insert(Square::H7, Rank::Seventh);
-
-        m.insert(Square::A8, Rank::Eigth);
-        m.insert(Square::B8, Rank::Eigth);
-        m.insert(Square::C8, Rank::Eigth);
-        m.insert(Square::D8, Rank::Eigth);
-        m.insert(Square::E8, Rank::Eigth);
-        m.insert(Square::F8, Rank::Eigth);
-        m.insert(Square::G8, Rank::Eigth);
-        m.insert(Square::H8, Rank::Eigth);
+        for s in RANK_1_SQUARES.iter() {
+            m.insert(s.clone(), Rank::First);
+        }
+        for s in RANK_2_SQUARES.iter() {
+            m.insert(s.clone(), Rank::Second);
+        }
+        for s in RANK_3_SQUARES.iter() {
+            m.insert(s.clone(), Rank::Third);
+        }
+        for s in RANK_4_SQUARES.iter() {
+            m.insert(s.clone(), Rank::Fourth);
+        }
+        for s in RANK_5_SQUARES.iter() {
+            m.insert(s.clone(), Rank::Fifth);
+        }
+        for s in RANK_6_SQUARES.iter() {
+            m.insert(s.clone(), Rank::Sixth);
+        }
+        for s in RANK_7_SQUARES.iter() {
+            m.insert(s.clone(), Rank::Seventh);
+        }
+        for s in RANK_8_SQUARES.iter() {
+            m.insert(s.clone(), Rank::Eigth);
+        }
         m
     };
 
     static ref SQUARE_TO_FILE: HashMap<Square, File> = {
         let mut m: HashMap<Square, File> = HashMap::new();
-        m.insert(Square::A1, File::A);
-        m.insert(Square::A2, File::A);
-        m.insert(Square::A3, File::A);
-        m.insert(Square::A4, File::A);
-        m.insert(Square::A5, File::A);
-        m.insert(Square::A6, File::A);
-        m.insert(Square::A7, File::A);
-        m.insert(Square::A8, File::A);
-
-        m.insert(Square::B1, File::B);
-        m.insert(Square::B2, File::B);
-        m.insert(Square::B3, File::B);
-        m.insert(Square::B4, File::B);
-        m.insert(Square::B5, File::B);
-        m.insert(Square::B6, File::B);
-        m.insert(Square::B7, File::B);
-        m.insert(Square::B8, File::B);
-
-        m.insert(Square::C1, File::C);
-        m.insert(Square::C2, File::C);
-        m.insert(Square::C3, File::C);
-        m.insert(Square::C4, File::C);
-        m.insert(Square::C5, File::C);
-        m.insert(Square::C6, File::C);
-        m.insert(Square::C7, File::C);
-        m.insert(Square::C8, File::C);
-
-        m.insert(Square::D1, File::D);
-        m.insert(Square::D2, File::D);
-        m.insert(Square::D3, File::D);
-        m.insert(Square::D4, File::D);
-        m.insert(Square::D5, File::D);
-        m.insert(Square::D6, File::D);
-        m.insert(Square::D7, File::D);
-        m.insert(Square::D8, File::D);
-
-        m.insert(Square::E1, File::E);
-        m.insert(Square::E2, File::E);
-        m.insert(Square::E3, File::E);
-        m.insert(Square::E4, File::E);
-        m.insert(Square::E5, File::E);
-        m.insert(Square::E6, File::E);
-        m.insert(Square::E7, File::E);
-        m.insert(Square::E8, File::E);
-
-        m.insert(Square::F1, File::F);
-        m.insert(Square::F2, File::F);
-        m.insert(Square::F3, File::F);
-        m.insert(Square::F4, File::F);
-        m.insert(Square::F5, File::F);
-        m.insert(Square::F6, File::F);
-        m.insert(Square::F7, File::F);
-        m.insert(Square::F8, File::F);
-
-        m.insert(Square::G1, File::G);
-        m.insert(Square::G2, File::G);
-        m.insert(Square::G3, File::G);
-        m.insert(Square::G4, File::G);
-        m.insert(Square::G5, File::G);
-        m.insert(Square::G6, File::G);
-        m.insert(Square::G7, File::G);
-        m.insert(Square::G8, File::G);
-
-        m.insert(Square::H1, File::H);
-        m.insert(Square::H2, File::H);
-        m.insert(Square::H3, File::H);
-        m.insert(Square::H4, File::H);
-        m.insert(Square::H5, File::H);
-        m.insert(Square::H6, File::H);
-        m.insert(Square::H7, File::H);
-        m.insert(Square::H8, File::H);
+        for s in FILE_A_SQUARES.iter() {
+            m.insert(s.clone(), File::A);
+        }
+        for s in FILE_B_SQUARES.iter() {
+            m.insert(s.clone(), File::B);
+        }
+        for s in FILE_C_SQUARES.iter() {
+            m.insert(s.clone(), File::C);
+        }
+        for s in FILE_D_SQUARES.iter() {
+            m.insert(s.clone(), File::D);
+        }
+        for s in FILE_E_SQUARES.iter() {
+            m.insert(s.clone(), File::E);
+        }
+        for s in FILE_F_SQUARES.iter() {
+            m.insert(s.clone(), File::F);
+        }
+        for s in FILE_G_SQUARES.iter() {
+            m.insert(s.clone(), File::G);
+        }
+        for s in FILE_H_SQUARES.iter() {
+            m.insert(s.clone(), File::H);
+        }
         m
     };
+
+    static ref NE_A8_DIAG_SQUARES: Vec<Square> = vec![Square::A8];
+    static ref NE_A7_DIAG_SQUARES: Vec<Square> = vec![
+        Square::A7, Square::B8,
+    ];
+    static ref NE_A6_DIAG_SQUARES: Vec<Square> = vec![
+        Square::A6, Square::B7, Square::C8,
+    ];
+    static ref NE_A5_DIAG_SQUARES: Vec<Square> = vec![
+        Square::A5, Square::B6, Square::C7, Square::D8,
+    ];
+    static ref NE_A4_DIAG_SQUARES: Vec<Square> = vec![
+        Square::A4, Square::B5, Square::C6, Square::D7, Square::E8,
+    ];
+    static ref NE_A3_DIAG_SQUARES: Vec<Square> = vec![
+        Square::A3, Square::B4, Square::C5, Square::D6, Square::E7, Square::F8,
+    ];
+    static ref NE_A2_DIAG_SQUARES: Vec<Square> = vec![
+        Square::A2, Square::B3, Square::C4, Square::D5, Square::E6, Square::F7, Square::G8,
+    ];
+    static ref NE_A1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::A1, Square::B2, Square::C3, Square::D4, Square::E5, Square::F6, Square::G7, Square::H8,
+    ];
+    static ref NE_B1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::B1, Square::C2, Square::D3, Square::E4, Square::F5, Square::G6, Square::H7,
+    ];
+    static ref NE_C1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::C1, Square::D2, Square::E3, Square::F4, Square::G5, Square::H6,
+    ];
+    static ref NE_D1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::D1, Square::E2, Square::F3, Square::G4, Square::H5,
+    ];
+    static ref NE_E1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::E1, Square::F2, Square::G3, Square::H4,
+    ];
+    static ref NE_F1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::F1, Square::G2, Square::H3,
+    ];
+    static ref NE_G1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::G1, Square::H2,
+    ];
+    static ref NE_H1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::H1,
+    ];
+
+
+    static ref SQUARE_TO_NE_DIAGONAL: HashMap<Square, NEDiagonal> = {
+        let mut m: HashMap<Square, NEDiagonal> = HashMap::new();
+        for s in NE_A8_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::A8);
+        }
+        for s in NE_A7_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::A7);
+        }
+        for s in NE_A6_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::A6);
+        }
+        for s in NE_A5_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::A5);
+        }
+        for s in NE_A4_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::A4);
+        }
+        for s in NE_A3_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::A3);
+        }
+        for s in NE_A2_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::A2);
+        }
+        for s in NE_A1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::A1);
+        }
+        for s in NE_B1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::B1);
+        }
+        for s in NE_C1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::C1);
+        }
+        for s in NE_D1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::D1);
+        }
+        for s in NE_E1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::E1);
+        }
+        for s in NE_F1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::F1);
+        }
+        for s in NE_G1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::G1);
+        }
+        for s in NE_H1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NEDiagonal::H1);
+        }
+        m
+    };
+
+    static ref NW_H8_DIAG_SQUARES: Vec<Square> = vec![Square::H8];
+    static ref NW_H7_DIAG_SQUARES: Vec<Square> = vec![
+        Square::H7, Square::G8,
+    ];
+    static ref NW_H6_DIAG_SQUARES: Vec<Square> = vec![
+        Square::H6, Square::G7, Square::F8,
+    ];
+    static ref NW_H5_DIAG_SQUARES: Vec<Square> = vec![
+        Square::H5, Square::G6, Square::F7, Square::E8,
+    ];
+    static ref NW_H4_DIAG_SQUARES: Vec<Square> = vec![
+        Square::H4, Square::G5, Square::F6, Square::E7, Square::D8,
+    ];
+    static ref NW_H3_DIAG_SQUARES: Vec<Square> = vec![
+        Square::H3, Square::G4, Square::F5, Square::E6, Square::D7, Square::C8,
+    ];
+    static ref NW_H2_DIAG_SQUARES: Vec<Square> = vec![
+        Square::H2, Square::G3, Square::F4, Square::E5, Square::D6, Square::C7, Square::B8,
+    ];
+    static ref NW_H1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::H1, Square::G2, Square::F3, Square::E4, Square::D5, Square::C6, Square::B7, Square::A8,
+    ];
+    static ref NW_G1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::G1, Square::F2, Square::E3, Square::D4, Square::C5, Square::B6, Square::A7,
+    ];
+    static ref NW_F1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::F1, Square::E2, Square::D3, Square::C4, Square::B5, Square::A6,
+    ];
+    static ref NW_E1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::E1, Square::D2, Square::C3, Square::B4, Square::A5,
+    ];
+    static ref NW_D1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::D1, Square::C2, Square::B3, Square::A4,
+    ];
+    static ref NW_C1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::C1, Square::B2, Square::A3,
+    ];
+    static ref NW_B1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::B1, Square::A2,
+    ];
+    static ref NW_A1_DIAG_SQUARES: Vec<Square> = vec![
+        Square::A1,
+    ];
+
+    static ref SQUARE_TO_NW_DIAGONAL: HashMap<Square, NWDiagonal> = {
+        let mut m: HashMap<Square, NWDiagonal> = HashMap::new();
+        for s in NE_A8_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::H8);
+        }
+        for s in NE_A7_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::H7);
+        }
+        for s in NE_A6_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::H6);
+        }
+        for s in NE_A5_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::H5);
+        }
+        for s in NE_A4_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::H4);
+        }
+        for s in NE_A3_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::H3);
+        }
+        for s in NE_A2_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::H2);
+        }
+        for s in NE_A1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::H1);
+        }
+        for s in NE_B1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::G1);
+        }
+        for s in NE_C1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::F1);
+        }
+        for s in NE_D1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::E1);
+        }
+        for s in NE_E1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::D1);
+        }
+        for s in NE_F1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::C1);
+        }
+        for s in NE_G1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::B1);
+        }
+        for s in NE_H1_DIAG_SQUARES.iter() {
+            m.insert(s.clone(), NWDiagonal::A1);
+        }
+        m
+    };
+
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, PartialOrd, Ord)]
@@ -505,6 +601,90 @@ impl File {
             File::H,
         ];
         FILES.iter()
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, PartialOrd, Ord)]
+pub enum NEDiagonal {
+    A8,
+    A7,
+    A6,
+    A5,
+    A4,
+    A3,
+    A2,
+    A1,
+    B1,
+    C1,
+    D1,
+    E1,
+    F1,
+    G1,
+    H1,
+}
+
+impl NEDiagonal {
+    pub fn iterator() -> Iter<'static, NEDiagonal> {
+        static NE_DIAGONALS: [NEDiagonal; 15] = [
+            NEDiagonal::A8,
+            NEDiagonal::A7,
+            NEDiagonal::A6,
+            NEDiagonal::A5,
+            NEDiagonal::A4,
+            NEDiagonal::A3,
+            NEDiagonal::A2,
+            NEDiagonal::A1,
+            NEDiagonal::B1,
+            NEDiagonal::C1,
+            NEDiagonal::D1,
+            NEDiagonal::E1,
+            NEDiagonal::F1,
+            NEDiagonal::G1,
+            NEDiagonal::H1,
+        ];
+        NE_DIAGONALS.iter()
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy, PartialOrd, Ord)]
+pub enum NWDiagonal {
+    H8,
+    H7,
+    H6,
+    H5,
+    H4,
+    H3,
+    H2,
+    H1,
+    G1,
+    F1,
+    E1,
+    D1,
+    C1,
+    B1,
+    A1,
+}
+
+impl NWDiagonal {
+    pub fn iterator() -> Iter<'static, NWDiagonal> {
+        static NW_DIAGONALS: [NWDiagonal; 15] = [
+            NWDiagonal::H8,
+            NWDiagonal::H7,
+            NWDiagonal::H6,
+            NWDiagonal::H5,
+            NWDiagonal::H4,
+            NWDiagonal::H3,
+            NWDiagonal::H2,
+            NWDiagonal::H1,
+            NWDiagonal::G1,
+            NWDiagonal::F1,
+            NWDiagonal::E1,
+            NWDiagonal::D1,
+            NWDiagonal::C1,
+            NWDiagonal::B1,
+            NWDiagonal::A1,
+        ];
+        NW_DIAGONALS.iter()
     }
 }
 
@@ -577,6 +757,10 @@ impl Square {
         }
     }
 
+    pub fn file(&self) -> File {
+        *SQUARE_TO_FILE.get(self).unwrap()
+    }
+
     pub fn file_squares(&self) -> Vec<Square> {
         match self.file() {
             File::A => FILE_A_SQUARES.iter().cloned().collect(),
@@ -590,8 +774,8 @@ impl Square {
         }
     }
 
-    pub fn file(&self) -> File {
-        *SQUARE_TO_FILE.get(self).unwrap()
+    pub fn ne_diagonal(&self) -> NEDiagonal {
+        *SQUARE_TO_NE_DIAGONAL.get(self).unwrap()
     }
 
     /// I return the square that is n squares north of self.
@@ -714,6 +898,8 @@ impl Square {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::HashSet;
+
     use super::*;
 
     #[test]
@@ -835,5 +1021,55 @@ mod tests {
             ],
             jumbled
         )
+    }
+
+    #[test]
+    fn test_ne_diagonals() {
+        let all_squares: HashSet<Square> = vec![
+            NE_A8_DIAG_SQUARES.iter().cloned(),
+            NE_A7_DIAG_SQUARES.iter().cloned(),
+            NE_A6_DIAG_SQUARES.iter().cloned(),
+            NE_A5_DIAG_SQUARES.iter().cloned(),
+            NE_A4_DIAG_SQUARES.iter().cloned(),
+            NE_A3_DIAG_SQUARES.iter().cloned(),
+            NE_A2_DIAG_SQUARES.iter().cloned(),
+            NE_A1_DIAG_SQUARES.iter().cloned(),
+            NE_B1_DIAG_SQUARES.iter().cloned(),
+            NE_C1_DIAG_SQUARES.iter().cloned(),
+            NE_D1_DIAG_SQUARES.iter().cloned(),
+            NE_E1_DIAG_SQUARES.iter().cloned(),
+            NE_F1_DIAG_SQUARES.iter().cloned(),
+            NE_G1_DIAG_SQUARES.iter().cloned(),
+            NE_H1_DIAG_SQUARES.iter().cloned(),
+        ]
+        .into_iter()
+        .flatten()
+        .collect();
+        assert_eq!(all_squares.len(), 64);
+    }
+
+    #[test]
+    fn test_nw_diagonals() {
+        let all_squares: HashSet<Square> = vec![
+            NW_H8_DIAG_SQUARES.iter().cloned(),
+            NW_H7_DIAG_SQUARES.iter().cloned(),
+            NW_H6_DIAG_SQUARES.iter().cloned(),
+            NW_H5_DIAG_SQUARES.iter().cloned(),
+            NW_H4_DIAG_SQUARES.iter().cloned(),
+            NW_H3_DIAG_SQUARES.iter().cloned(),
+            NW_H2_DIAG_SQUARES.iter().cloned(),
+            NW_A1_DIAG_SQUARES.iter().cloned(),
+            NW_B1_DIAG_SQUARES.iter().cloned(),
+            NW_C1_DIAG_SQUARES.iter().cloned(),
+            NW_D1_DIAG_SQUARES.iter().cloned(),
+            NW_E1_DIAG_SQUARES.iter().cloned(),
+            NW_F1_DIAG_SQUARES.iter().cloned(),
+            NW_G1_DIAG_SQUARES.iter().cloned(),
+            NW_H1_DIAG_SQUARES.iter().cloned(),
+        ]
+        .into_iter()
+        .flatten()
+        .collect();
+        assert_eq!(all_squares.len(), 64);
     }
 }
