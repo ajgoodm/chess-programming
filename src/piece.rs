@@ -174,7 +174,7 @@ impl Piece {
     }
 
     fn knight_candidate_moves(&self) -> HashSet<Move> {
-        let mut squares: HashSet::<Option<Square>> = HashSet::new();
+        let mut squares: HashSet<Option<Square>> = HashSet::new();
         if let Some(n) = self.square.north(2) {
             squares.insert(n.east(1));
             squares.insert(n.west(1));
@@ -191,10 +191,11 @@ impl Piece {
             squares.insert(w.north(1));
             squares.insert(w.south(1));
         }
-        squares.into_iter()
-        .filter(|x| Option::is_some(x))
-        .map(|square| Move::new(self.clone(), square.unwrap(), false))
-        .collect()
+        squares
+            .into_iter()
+            .filter(|x| Option::is_some(x))
+            .map(|square| Move::new(self.clone(), square.unwrap(), false))
+            .collect()
     }
 }
 
