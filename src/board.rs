@@ -498,49 +498,49 @@ lazy_static! {
 
     static ref SQUARE_TO_NW_DIAGONAL: HashMap<Square, NWDiagonal> = {
         let mut m: HashMap<Square, NWDiagonal> = HashMap::new();
-        for s in NE_A8_DIAG_SQUARES.iter() {
+        for s in NW_H8_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::H8);
         }
-        for s in NE_A7_DIAG_SQUARES.iter() {
+        for s in NW_H7_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::H7);
         }
-        for s in NE_A6_DIAG_SQUARES.iter() {
+        for s in NW_H6_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::H6);
         }
-        for s in NE_A5_DIAG_SQUARES.iter() {
+        for s in NW_H5_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::H5);
         }
-        for s in NE_A4_DIAG_SQUARES.iter() {
+        for s in NW_H4_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::H4);
         }
-        for s in NE_A3_DIAG_SQUARES.iter() {
+        for s in NW_H3_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::H3);
         }
-        for s in NE_A2_DIAG_SQUARES.iter() {
+        for s in NW_H2_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::H2);
         }
-        for s in NE_A1_DIAG_SQUARES.iter() {
+        for s in NW_H1_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::H1);
         }
-        for s in NE_B1_DIAG_SQUARES.iter() {
+        for s in NW_G1_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::G1);
         }
-        for s in NE_C1_DIAG_SQUARES.iter() {
+        for s in NW_F1_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::F1);
         }
-        for s in NE_D1_DIAG_SQUARES.iter() {
+        for s in NW_E1_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::E1);
         }
-        for s in NE_E1_DIAG_SQUARES.iter() {
+        for s in NW_D1_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::D1);
         }
-        for s in NE_F1_DIAG_SQUARES.iter() {
+        for s in NW_C1_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::C1);
         }
-        for s in NE_G1_DIAG_SQUARES.iter() {
+        for s in NW_B1_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::B1);
         }
-        for s in NE_H1_DIAG_SQUARES.iter() {
+        for s in NW_A1_DIAG_SQUARES.iter() {
             m.insert(s.clone(), NWDiagonal::A1);
         }
         m
@@ -776,6 +776,50 @@ impl Square {
 
     pub fn ne_diagonal(&self) -> NEDiagonal {
         *SQUARE_TO_NE_DIAGONAL.get(self).unwrap()
+    }
+
+    pub fn ne_diagonal_squares(&self) -> Vec<Square> {
+        match self.ne_diagonal() {
+            NEDiagonal::A8 => NE_A8_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::A7 => NE_A7_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::A6 => NE_A6_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::A5 => NE_A5_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::A4 => NE_A4_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::A3 => NE_A3_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::A2 => NE_A2_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::A1 => NE_A1_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::B1 => NE_B1_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::C1 => NE_C1_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::D1 => NE_D1_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::E1 => NE_E1_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::F1 => NE_F1_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::G1 => NE_G1_DIAG_SQUARES.iter().cloned().collect(),
+            NEDiagonal::H1 => NE_H1_DIAG_SQUARES.iter().cloned().collect(),
+        }
+    }
+
+    pub fn nw_diagonal(&self) -> NWDiagonal {
+        *SQUARE_TO_NW_DIAGONAL.get(self).unwrap()
+    }
+
+    pub fn nw_diagonal_squares(&self) -> Vec<Square> {
+        match self.nw_diagonal() {
+            NWDiagonal::H8 => NW_H8_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::H7 => NW_H7_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::H6 => NW_H6_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::H5 => NW_H5_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::H4 => NW_H4_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::H3 => NW_H3_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::H2 => NW_H2_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::H1 => NW_H1_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::G1 => NW_G1_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::F1 => NW_F1_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::E1 => NW_E1_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::D1 => NW_D1_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::C1 => NW_C1_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::B1 => NW_B1_DIAG_SQUARES.iter().cloned().collect(),
+            NWDiagonal::A1 => NW_A1_DIAG_SQUARES.iter().cloned().collect(),
+        }
     }
 
     /// I return the square that is n squares north of self.
